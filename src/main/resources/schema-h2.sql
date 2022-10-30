@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS songs;
+
+CREATE TABLE songs (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    year_pub DATE NOT NULL,
+    language VARCHAR(8) NOT NULL,
+    PRIMARY KEY (id)
+);
