@@ -34,7 +34,14 @@ public class GlobalExceptionHandler {
             Exception.class
     })
     public ResponseEntity<SongErrorObj> handleSong(Exception e, HttpServletRequest request){
-        return new ResponseEntity<>(helperCreate(e.getMessage(), HttpStatus.BAD_REQUEST, request.getRequestURI(), e.getClass().getSimpleName()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                helperCreate(
+                        e.getMessage(),
+                        HttpStatus.BAD_REQUEST,
+                        request.getRequestURI(),
+                        e.getClass().getSimpleName()),
+                        HttpStatus.BAD_REQUEST
+        );
     }
      private SongErrorObj helperCreate(String mess, HttpStatus stat, String path, String exc){
          SongErrorObj respObj = new SongErrorObj();

@@ -15,7 +15,8 @@ public interface SongRepository extends CrudRepository<Song, Long> {
     @Query("select s from Song s where lower(s.author) = lower(?1) and (?2 is null or s.year_pub >= ?2)")
     public List<Song> findAllSongsByAuthorAndDate(String author, LocalDate year_pub);
     @Modifying(clearAutomatically = true)
-    @Query("update Song s set s.title= coalesce(?1, s.title), s.author=coalesce(?2, s.author), s.year_pub=coalesce(?3, s.year_pub), s.language=coalesce(?4, s.language) where s.id = ?5 ")
+    @Query("update Song s set s.title= coalesce(?1, s.title), s.author=coalesce(?2, s.author),"
+            + " s.year_pub=coalesce(?3, s.year_pub), s.language=coalesce(?4, s.language) where s.id = ?5 ")
     public void updateById(String title, String author, LocalDate year_pub, String language, Long id);
     @Modifying(clearAutomatically = true)
     @Query("delete from Song s where lower(s.title)=lower(?1)")

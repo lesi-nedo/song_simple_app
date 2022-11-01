@@ -1,0 +1,606 @@
+{
+	"info": {
+		"_postman_id": "fd54a470-d887-4e10-9196-daa88f719d9e",
+		"name": "appTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23147135"
+	},
+	"item": [
+		{
+			"name": "Get song",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const values = Array.from([1, 4, \"s\", 5, \"er\", 100, null]);",
+							"pm.collectionVariables.set(\"id\", values[Math.floor(Math.random() * 8)])",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all songs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs by author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const values = Array.from([1, \"oneRepublic\", \"NOTEXISTING\", \"\", \"Imagine     Dragons\", null]);",
+							"pm.collectionVariables.set(\"author\", \"Imagine     Dragons\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song?author={{author}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "{{author}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs by author and/or pub year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song?author=oneRepublic;year_pub=2019",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "oneRepublic;year_pub=2019"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const values = Array.from([1, \"Shots\", \"NOTEXISTING\", \"\", \"Better    \", null]);",
+							"pm.collectionVariables.set(\"title\", values[Math.floor(Math.random() * 7)])",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song?title={{title}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "{{title}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Songs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const titles = Array.from([1, \"Shots\", \"NOTEXISTING\", \"\", \"Better    \", null]);",
+							"const authors = Array.from([1, \"John Lennon\", \"NOTEXISTING         Space\", \"\", \"   U2    \", null]);",
+							"const year_pub = Array.from([1, \"2019\", \"22222\", \"\", \"2021-01-09    \", null]);",
+							"const language = Array.from([1, \"us_US\", \"it_IT\", \"\", \"fr_FR    \", null]);",
+							"",
+							"pm.collectionVariables.set(\"title\", titles[Math.floor(Math.random() * 7)]);",
+							"pm.collectionVariables.set(\"author\", authors[Math.floor(Math.random() * 7)])",
+							"pm.collectionVariables.set(\"year_pub\", year_pub[Math.floor(Math.random() * 7)])",
+							"pm.collectionVariables.set(\"language\", language[Math.floor(Math.random() * 7)])",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"{{title}}\",\n    \"author\": \"{{author}}\",\n    \"year_pub\": \"{{year_pub}}\",\n    \"language\": \"{{language}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/song",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Song",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"title\": \"Test\",\n    \"author\": \"Some\",\n    \"year_pub\": \"2019-01-01\",\n    \"language\": \"en_US\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/song",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update songs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const titles = Array.from([1, \"Shots\", \"NOTEXISTING\", \"\", \"Better    \", null]);",
+							"const authors = Array.from([1, \"John Lennon\", \"NOTEXISTING         Space\", \"\", \"   U2    \", null]);",
+							"const year_pub = Array.from([1, \"2019\", \"22222\", \"\", \"2021-01-09    \", null]);",
+							"const language = Array.from([1, \"us_US\", \"it_IT\", \"\", \"fr_FR    \", null]);",
+							"const values = Array.from([1, 4, \"s\", 5, \"er\", 100, null]);",
+							"pm.collectionVariables.set(\"id\", values[Math.floor(Math.random() * 8)])",
+							"",
+							"pm.collectionVariables.set(\"title\", titles[Math.floor(Math.random() * 7)]);",
+							"pm.collectionVariables.set(\"author\", authors[Math.floor(Math.random() * 7)])",
+							"pm.collectionVariables.set(\"year_pub\", year_pub[Math.floor(Math.random() * 7)])",
+							"pm.collectionVariables.set(\"language\", language[Math.floor(Math.random() * 7)])",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/{{id}};title={{title}};author={{author}};year_pub={{year_pub}};language={{language}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"{{id}};title={{title}};author={{author}};year_pub={{year_pub}};language={{language}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Song",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete By Title",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const titles = Array.from([1, \"Shots\", \"NOTEXISTING\", \"\", \"Better    \", null]);",
+							"pm.collectionVariables.set(\"title\", titles[Math.floor(Math.random() * 7)]);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song?title={{title}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "{{title}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Songs By Id In Range Ordered from to",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song?from=1&to=4&order_by=title ASC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "1"
+						},
+						{
+							"key": "to",
+							"value": "4"
+						},
+						{
+							"key": "order_by",
+							"value": "title ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs By Id in order by a column",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Songs By TItle in Order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/ordered?title=Better&order_by=title ASC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"ordered"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Better"
+						},
+						{
+							"key": "order_by",
+							"value": "title ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs by author ordered by",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/ordered?author=oneRepublic&order_by=title DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"ordered"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "oneRepublic"
+						},
+						{
+							"key": "order_by",
+							"value": "title DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Songs Ordered In Pages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/pages?fromPage=0&pageSize=3&order_by=title ASC,author DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"pages"
+					],
+					"query": [
+						{
+							"key": "fromPage",
+							"value": "0"
+						},
+						{
+							"key": "order_by",
+							"value": "title DESC",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "3"
+						},
+						{
+							"key": "order_by",
+							"value": "title ASC,author DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs by title in ordered in pages",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get songs by author ordered in pages",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Songs by Language ordered in Pages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/song/pages?language=en_US&fromPage=0&pageSize=3&order_by=title DESC,author DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"song",
+						"pages"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "en_US"
+						},
+						{
+							"key": "fromPage",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "3"
+						},
+						{
+							"key": "order_by",
+							"value": "title DESC,author DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update song with Params",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test\",\n    \"author\": \"Some\",\n    \"year_pub\": \"2019-01-01\",\n    \"language\": \"en_US\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "a",
+			"type": "string"
+		},
+		{
+			"key": "author",
+			"value": "oneRepublic",
+			"type": "string"
+		},
+		{
+			"key": "title",
+			"value": "Better",
+			"type": "string"
+		},
+		{
+			"key": "year_pub",
+			"value": "2019",
+			"type": "string"
+		},
+		{
+			"key": "language",
+			"value": "en_US",
+			"type": "string"
+		}
+	]
+}

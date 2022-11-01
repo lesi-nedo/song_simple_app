@@ -28,7 +28,9 @@ public class SongsSortingRepositoryCustomImpl implements SongsSortingRepositoryC
     }
 
     public  List<Song> findSongsByTitleOrdered(String title, Set<String> valuesOrder) {
-        Query q = entManag.createNativeQuery("select  * from songs where title lower(like) lower(concat(:title, '%')) order by " + StaticMethods.buildStringQuery(valuesOrder), Song.class);
+        Query q = entManag.createNativeQuery(
+                "select  * from songs where title lower(like) lower(concat(:title, '%')) order by "
+                        + StaticMethods.buildStringQuery(valuesOrder), Song.class);
         q.setParameter("title", title);
         return q.getResultList();
     }

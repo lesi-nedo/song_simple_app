@@ -40,7 +40,9 @@ public class SongController {
         return songsServ.findById(id);
     }
     @GetMapping(value="/song", params="title")
-    public List<Song> findByTitle(@RequestParam String title) throws SongFormatException, SongNotFoundException {
+    public List<Song> findByTitle(@RequestParam String title)
+            throws SongFormatException, SongNotFoundException
+    {
         return songsServ.findByTitle(title);
     }
 
@@ -99,7 +101,8 @@ public class SongController {
     }
 
     @DeleteMapping(value="/song", params="title")
-    public Map<String, SongSuccessObj> deleteAllByTitle (@RequestParam String title) throws SongFormatException, SongNotFoundException {
+    public Map<String, SongSuccessObj> deleteAllByTitle (@RequestParam String title) throws SongFormatException,
+            SongNotFoundException {
         List<Song> songs = songsServ.deleteAllByTitle(title);
         return helperFromListToMap(songs);
     }
@@ -120,7 +123,9 @@ public class SongController {
     }
 
     @GetMapping(value="/song/ordered", params={"title", "order_by"})
-    public List<Song> findSongByTitleOrdered(@RequestParam Map<String, String> idsAndOrdBy) throws NumberFormatException, SongNotFoundException, SongFormatException {
+    public List<Song> findSongByTitleOrdered(@RequestParam Map<String, String> idsAndOrdBy)
+            throws NumberFormatException, SongNotFoundException, SongFormatException
+    {
         String[] ordByVal = idsAndOrdBy.get("order_by").split(",");
         List<Song> songs = songsServ.getSongsByTitleOrdered(idsAndOrdBy.get("title"), new HashSet<>(List.of(ordByVal)));
         return songs;
@@ -158,7 +163,8 @@ public class SongController {
     }
 
     @GetMapping(value="/song/pages", params={"title", "fromPage", "pageSize"})
-    //Gets songs with title equal to the title parameter starting from the set chunk specified in fromPage and the size of page specified in pageSize
+    //Gets songs with title equal to the title parameter starting from the set chunk
+    // specified in fromPage and the size of page specified in pageSize
     //and if present can be order by
     public List<Song> findSongsByTitleOrderedInPages(
             @RequestParam(name="title") String title,

@@ -71,7 +71,7 @@ public class SongServiceImpl implements SongService{
     @Transactional
     @NotNull
     @Override
-    public void updateById(Long id, Song song) throws SongNotFoundException, SongFormatException, DateTimeParseException{
+    public void updateById(Long id, Song song) throws  SongFormatException, DateTimeParseException{
         songsRep.updateById(validateField("title", removeSpacesAndTrim(song.getTitle())), validateField("author",
                 removeSpacesAndTrim(song.getAuthor())), song.getYear_pub(), validateField("language", removeSpacesAndTrim(song.getLanguage())), id);
     }
@@ -86,7 +86,8 @@ public class SongServiceImpl implements SongService{
     @Transactional
     @NotNull
     @Override
-    public List<Song> deleteAllByTitle(String title) throws SongFormatException, SongNotFoundException {
+    public List<Song> deleteAllByTitle(String title) throws SongFormatException,
+            SongNotFoundException {
         title = removeSpacesAndTrim(title);
         validateField("title", title);
         List<Song> allSongs = songsRep.findByTitle(title);
@@ -111,7 +112,9 @@ public class SongServiceImpl implements SongService{
     @Transactional(readOnly = true)
     @NotNull
     @Override
-    public List<Song> findByTitle(String title) throws SongNotFoundException, SongFormatException{
+    public List<Song> findByTitle(String title)
+            throws SongNotFoundException, SongFormatException
+    {
        List<Song> song =  songsRep.findByTitle(validateField("title", removeSpacesAndTrim(title)));
         if(song == null || song.isEmpty())
             throw new SongNotFoundException(ERR_MESSAGE_TITLE + title);
@@ -163,7 +166,9 @@ public class SongServiceImpl implements SongService{
     @Transactional(readOnly = true)
     @NotNull
     @Override
-    public List<Song> getSongsByTitleOrdered(String title, Set<String> valuesOrder) throws NullPointerException, SongNotFoundException, SongFormatException {
+    public List<Song> getSongsByTitleOrdered(String title, Set<String> valuesOrder)
+            throws NullPointerException, SongNotFoundException, SongFormatException
+    {
         title = validateField("title", title);
         validateSet(valuesOrder);
         return songsSortedRep.findSongsByTitleOrdered(title, valuesOrder);
@@ -185,10 +190,13 @@ public class SongServiceImpl implements SongService{
     @Transactional(readOnly = true)
     @NotNull
     @Override
-    //Gets songs  with the same title and orders by values specified in orderBy parameter if null default is used which is: id DESC
+    //Gets songs  with the same title and orders by values specified in orderBy parameter
+    // if null default is used which is: id DESC
     //fromPage: from which set chunk start to get the data
     //pageSize: the total number of the songs in the page
-    public List<Song> getSongsByTitleOrderedInPages(String title, Integer fromPage, Integer pageSize, String orderBy) throws SongFormatException {
+    public List<Song> getSongsByTitleOrderedInPages(String title, Integer fromPage, Integer pageSize, String orderBy)
+            throws SongFormatException
+    {
         title = validateField("title", title);
         Pageable pageable =  PageRequest.of(fromPage, pageSize, helperToGetSortObj(orderBy));
         return songsPagingRep.findByTitle(title, pageable);
